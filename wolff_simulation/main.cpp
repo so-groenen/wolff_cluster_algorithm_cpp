@@ -22,10 +22,10 @@ constexpr size_t VRTL_SQR_SIZE  {2};
 constexpr float ZOOM_RATIO      {1.1f};
 constexpr float MIN_TEMP        {0.0f}; 
 constexpr float MAX_TEMP        {5.0f};
+constexpr float SQR_SIZE        {ZOOM_RATIO*static_cast<float>(VRTL_SQR_SIZE)};
 const ImU32 SPIN_UP_COLOR       {ImColor(120, 185, 181, 255)};
 const ImU32 SPIN_DOWN_COLOR     {ImColor(50, 10, 107, 255)};
 const ImU32 MOUSE_COLOR         {ImColor(255, 10, 10, 255)};
-constexpr float SQR_SIZE        {ZOOM_RATIO*static_cast<float>(VRTL_SQR_SIZE)};
 
 class WolffSimulation : public IPhysGuiApp
 {
