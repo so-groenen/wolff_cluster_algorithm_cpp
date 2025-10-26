@@ -19,7 +19,7 @@ inline uint32_t Seed()
 constexpr size_t NX             {512};
 constexpr size_t NY             {256};   
 constexpr size_t VRTL_SQR_SIZE  {2}; 
-constexpr float ZOOM_RATIO      {1.0f};
+constexpr float ZOOM_RATIO      {1.1f};
 constexpr float MIN_TEMP        {0.0f}; 
 constexpr float MAX_TEMP        {5.0f};
 const ImU32 SPIN_UP_COLOR       {ImColor(120, 185, 181, 255)};
@@ -33,8 +33,8 @@ class WolffSimulation : public IPhysGuiApp
     PhysGraphics::Texture checkboard_texture    {checkboard_img};
     MyGuiArray spin_matrix                      {NY, NX}; // matrix is rows & columns, array is width & length!!
     std::mt19937 rng                            {Seed()};
-    SpinMode spin_mode                          {SpinMode::SingleSpin};
-    ControlMode control_mode                    {ControlMode::Manual};
+    SpinMode spin_mode                          {SpinMode::FullSpin};
+    ControlMode control_mode                    {ControlMode::Automatic};
     WolffFiniteStateMachine finite_state_machine{control_mode, spin_mode};
     ImGuiIO& io                                 {PhysGui::GetIO()};
     float temp                                  {3.5f};
@@ -46,6 +46,13 @@ public:
     WolffSimulation()
     {
         PhysRunner::LoadFontTTF("fonts/segoeui.ttf");
+        for (size_t i = 0; i < 10'000; i++)
+        {
+            finite_state_machine.runAlgorithm(spin_matrix, rng, temp);
+        }
+        spin_mode       = SpinMode::QuadrupleSpin;
+        control_mode    = ControlMode::Automatic;
+        temp            = 1.6f;
     }
     void Update() override
     {
